@@ -77,6 +77,7 @@ v=1
   local a21=(a b) a22=(a b)
   local a31=(a b c) a32=(a b c)
   local a41=(foo bar) a42=(foo bar)
+  local a5=(b a)
   equals_var a11 a12
   equals_var a12 a11
   equals_var a21 a22
@@ -91,6 +92,8 @@ v=1
   ! equals_var a31 a21
   ! equals_var a21 a41
   ! equals_var a41 a21
+  ! equals_var a11 a5
+  ! equals_var a5 a11
 }
 
 @test "array var (skiped index)" {
