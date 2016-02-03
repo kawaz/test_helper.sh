@@ -35,25 +35,27 @@ v=1
 
 @test "differ type" {
   s1= s2=one s3="one two" a1=() a2=(one) a3=(one two)
-  declare -A A1=() A2=([one]=one) A3=([one]=one [two]=two)
   ! equals_var s1 a1
   ! equals_var a1 s1
-  ! equals_var s1 A1
-  ! equals_var A1 s1
-  ! equals_var a1 A1
-  ! equals_var A1 a1
   ! equals_var s2 a2
   ! equals_var a2 s2
-  ! equals_var s2 A2
-  ! equals_var A2 s2
-  ! equals_var a2 A2
-  ! equals_var A2 a2
   ! equals_var s3 a3
   ! equals_var a3 s3
-  ! equals_var s3 A3
-  ! equals_var A3 s3
-  ! equals_var a3 A3
-  ! equals_var A3 a3
+  if [[ 4 -le $BASH_VERSINFO ]]; then
+    declare -A A1=() A2=([one]=one) A3=([one]=one [two]=two)
+    ! equals_var s1 A1
+    ! equals_var A1 s1
+    ! equals_var a1 A1
+    ! equals_var A1 a1
+    ! equals_var s2 A2
+    ! equals_var A2 s2
+    ! equals_var a2 A2
+    ! equals_var A2 a2
+    ! equals_var s3 A3
+    ! equals_var A3 s3
+    ! equals_var a3 A3
+    ! equals_var A3 a3
+  fi
 }
 
 @test "string var" {
@@ -118,9 +120,13 @@ v=1
   ! equals_var a11 a6
   ! equals_var a5 a6
   ! equals_var a6 a5
+  local a71=([2]= [3]=) a72=([5]= [6]=)
+  ! equals_var a71 a72
+  ! equals_var a72 a71
 }
 
 @test "hash var" {
+  [[ 4 -le $BASH_VERSINFO ]] || skip
   declare -A A11=()
   declare -A A12=()
   declare -A A21=([one]=1 [two]=2)
